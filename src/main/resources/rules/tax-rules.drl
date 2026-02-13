@@ -1,0 +1,11 @@
+  package com.example.rules
+
+    import com.example.model.Order
+
+    rule "Apply discount for large orders"
+        when
+            $order : Order( amount > 1000 )
+        then
+            $order.setDiscount(0.10); // Apply 10% discount
+            System.out.println("Discount applied for large order!");
+    end

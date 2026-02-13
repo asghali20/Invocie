@@ -1,0 +1,167 @@
+openapi: 3.0.3
+x-stoplight:
+  id: vrr42bvrpq899
+info:
+  title: SAG API
+  version: '1.0'
+  description: ' '
+  contact:
+    name: sag Group
+    url: 'https://developer.sag.com/'
+    email: api-office@evernorth.com
+servers:
+  - url: 'https://api.sag.com'
+    description: Dev
+  - url: 'https://int-sag.com'
+    description: Test
+tags:
+  - name: all-operations
+    description: Sag API
+paths:
+  /sag-invoice/v1/:
+    post:
+      description: .
+      tags:
+        - all-operations
+      operationId: sag-post
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoice:
+                    type: array
+                    x-stoplight:
+                      id: 7f1dvurtit76h
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              #oneOf:  
+              $ref: '#/components/schemas/Invoice'
+      x-stoplight:
+        id: agq9r8vfetwod
+      summary: 
+    servers:
+      - url: ''
+        description: ''
+components:
+  schemas:
+    Invoice:
+      type:  object
+      additionalProperties: false
+      #nullable: true
+      x-stoplight:
+        id: cwzzjj6wieckl
+      title: Invoice
+      description: 
+      required:
+        - id
+        - clientId
+        - issueDate
+        - lineItems   
+
+      properties:
+        id:
+          type: string
+          pattern: "^[A-Za-z0-9]+$"
+          description: id.
+          example: U12345
+        clientId:
+          type: string
+          pattern: "^[A-Za-z0-9]+$"
+          description: client id.
+          example: U12345
+        issueDate:
+          type: date
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          example: "2019-05-17"
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - FINALIZED
+            - PAID
+          description: ''
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'     
+        tax:
+          type: number
+        subTotal:
+          type: number
+        total:
+          type: number
+    Client:
+      type: object
+      additionalProperties: false
+      x-stoplight:
+        id: s817rsyz0l50b
+      title: Client
+      required:
+        - id
+        - name
+        - countryCode
+        - preferredCurrency
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: jone smith
+        countryCode:
+          type: string
+          enum:
+            - US
+            - DE
+            - IN
+          description: ''
+          x-stoplight:
+            id: j9xq3oe6vjkqn
+        preferredCurrency:
+          type: string
+          enum:
+            - USD
+            - EUR
+            - INR
+          description: 
+          example: USD
+          x-stoplight:
+            id: dguav1vblyj3k 
+    LineItem:
+      type: object
+      additionalProperties: false
+      x-stoplight:
+        id: s817rsyz0l50b
+      title: Client
+      required:
+        - description
+        - quantity
+        - unitPrice
+      properties:
+        description:
+          type: string
+          example: 123
+        quantity:
+          type: number
+          example: 22
+        unitPrice:
+          type: number
+          example: 10
+
+  securitySchemes:
+    apiKey-1:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
