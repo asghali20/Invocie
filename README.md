@@ -1,6 +1,7 @@
 
 
 -   Using Open API schema under /resources/specs
+-   
 -   Dynamicly generating the model clasess from the schema in the pom.xml
 -   Adding Docker file for image deployment.
 -   Adding Jenkinsfile for pipline CI/CD deployments and sonarqube configurations
